@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: com.saucedemo.runners.CucumberTestSuite
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 22.953 s <<< FAILURE! - in com.saucedemo.runners.CucumberTestSuite
+Inicio de sesión en SauceDemo.Inicio de sesión exitoso con credenciales válidas  Time elapsed: 13.184 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <PRODUCTS> but was: <Products>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1142)
+	at com.saucedemo.stepdefinitions.LoginStepDefinitions.deboVerElTítulo(LoginStepDefinitions.java:60)
+	at ✽.debo ver el título "PRODUCTS"(classpath:features/login.feature:13)
+
