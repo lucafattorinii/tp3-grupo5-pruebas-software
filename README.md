@@ -67,26 +67,35 @@ cd ejercicio1
 mvn clean test
 ```
 
-##  Ejercicio 2: Pruebas de Aceptación con Cucumber
+##  Ejercicio 2: Pruebas BDD con Cucumber
+
+###  Nota sobre el idioma
+
+Las pruebas BDD se implementaron en ingles porque el parser de Gherkin de Cucumber mostraba problemas al interpretar las palabras clave en español, incluso con la directiva `# language: es` al inicio del archivo feature. 
+
+Para garantizar la estabilidad y confiabilidad de las pruebas, se decidió utilizar el inglés como idioma predeterminado para:
+- Palabras clave de Gherkin (Given, When, Then, etc.)
+- Nombres de métodos en las definiciones de pasos
+- Mensajes de aserción y logs
 
 ###  Escenarios BDD
 1. **Inicio de sesión exitoso**
    ```gherkin
-   Escenario: Inicio de sesion exitoso con credenciales validas
-     Dado que estoy en la pagina de inicio de SauceDemo
-     Cuando ingreso el nombre de usuario "standard_user" y la contraseña "secret_sauce"
-     Y hago clic en el boton de inicio de sesion
-     Entonces debo ser redirigido a la pagina de productos
-     Y debo ver el titulo "PRODUCTS"
+   Scenario: Successful login with valid credentials
+     Given I am on the SauceDemo login page
+     When I enter username "standard_user" and password "secret_sauce"
+     And I click the login button
+     Then I should be redirected to the products page
+     And I should see the title "Products"
    ```
 
 2. **Inicio de sesión fallido**
    ```gherkin
-   Escenario: Inicio de sesion fallido con credenciales invalidas
-     Dado que estoy en la pagina de inicio de SauceDemo
-     Cuando ingreso el nombre de usuario "usuario_invalido" y la contraseña "contraseña_invalida"
-     Y hago clic en el boton de inicio de sesion
-     Entonces debo ver un mensaje de error
+   Scenario: Failed login with invalid credentials
+     Given I am on the SauceDemo login page
+     When I enter username "invalid_user" and password "invalid_password"
+     And I click the login button
+     Then I should see an error message
    ```
 
 ###  Tecnologías Utilizadas
