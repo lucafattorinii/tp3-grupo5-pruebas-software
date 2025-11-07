@@ -37,7 +37,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        
+    </dependencies> <!-- Esta etiqueta faltaba -->
 
     <build>
         <plugins>

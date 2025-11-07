@@ -1,19 +1,20 @@
-# language: es
-@saucedemo
-Caracteristica: Inicio de sesion en SauceDemo
-  Como usuario de SauceDemo
-  Quiero poder iniciar sesion en la aplicacion
-  Para acceder a los productos disponibles
+@web
+Feature: SauceDemo Login
+  As a SauceDemo user
+  I want to log in to the application
+  So that I can access the products
 
-  Escenario: Inicio de sesion exitoso con credenciales validas
-    Dado que estoy en la pagina de inicio de SauceDemo
-    Cuando ingreso el nombre de usuario "standard_user" y la contraseña "secret_sauce"
-    Y hago clic en el boton de inicio de sesion
-    Entonces debo ser redirigido a la pagina de productos
-    Y debo ver el titulo "PRODUCTS"
+  @successful-login
+  Scenario: Successful login with valid credentials
+    Given I am on the SauceDemo login page
+    When I enter username "standard_user" and password "secret_sauce"
+    And I click the login button
+    Then I should be redirected to the products page
+    And I should see the title "Products"
 
-  Escenario: Inicio de sesion fallido con credenciales invalidas
-    Dado que estoy en la pagina de inicio de SauceDemo
-    Cuando ingreso el nombre de usuario "usuario_invalido" y la contraseña "contraseña_invalida"
-    Y hago clic en el boton de inicio de sesion
-    Entonces debo ver un mensaje de error que diga "Epic sadface: Username and password do not match any user in this service"
+  @failed-login
+  Scenario: Failed login with invalid credentials
+    Given I am on the SauceDemo login page
+    When I enter username "invalid_user" and password "invalid_password"
+    And I click the login button
+    Then I should see an error message

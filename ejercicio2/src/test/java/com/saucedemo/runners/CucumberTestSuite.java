@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         "junit:target/cucumber-reports/CucumberTestReport.xml"
     },
     monochrome = true,
-    tags = "@saucedemo"
+    tags = "@web and (@successful-login or @failed-login)"
 )
 public class CucumberTestSuite {
     // Clase vacía utilizada solo como punto de entrada para JUnit

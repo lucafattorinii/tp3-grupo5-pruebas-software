@@ -11,10 +11,21 @@ public class TestContext {
     private static TestContext instance;
 
     private TestContext() {
+        // Constructor privado para evitar instanciación directa
+        initializeDriver();
+    }
+    
+    public void initializeDriver() {
         try {
+            // Si ya hay un driver en ejecución, lo cerramos
+            if (this.driver != null) {
+                this.driver.quit();
+                this.driver = null;
+            }
+            
             System.out.println("\n=== Inicializando TestContext ===");
             
-            // 1. Configuracion del controlador
+            // 1. Configuración del controlador
             String edgeDriverPath = "C:\\\\Users\\\\lucaf\\\\OneDrive\\\\Escritorio\\\\Luca\\\\Sistemas\\\\Prueba de Software\\\\tp3\\\\drivers\\\\msedgedriver.exe";
             System.out.println("Ruta del controlador: " + edgeDriverPath);
             
@@ -28,25 +39,24 @@ public class TestContext {
             System.setProperty("webdriver.edge.driver", edgeDriverPath);
             System.setProperty("webdriver.edge.verboseLogging", "true");
             
-            // 2. Configuracion de opciones de Edge
+            // 2. Configuración de opciones de Edge
             EdgeOptions options = new EdgeOptions();
             
-            // Configuracion basica
+            // Configuración básica
             options.addArguments("--start-maximized");
             options.addArguments("--remote-allow-origins=*");
             options.addArguments("--disable-notifications");
             
-            // Configuracion para evitar problemas comunes
+            // Configuración para evitar problemas comunes
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-extensions");
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-software-rasterizer");
             
-            // Configuracion de rendimiento
+            // Configuración de rendimiento
             options.addArguments("--disable-blink-features=AutomationControlled");
             options.addArguments("--disable-infobars");
-            
             
             // 3. Inicializacion del navegador
             System.out.println("Iniciando Microsoft Edge...");
@@ -54,10 +64,11 @@ public class TestContext {
             
             this.driver = new EdgeDriver(options);
             
-            // Configurar timeouts
+            // Configuraciones adicionales del navegador
             this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
             this.driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(30));
+            this.driver.manage().deleteAllCookies();
             
             System.out.println("EdgeDriver iniciado correctamente");
         } catch (Exception e) {
@@ -67,23 +78,33 @@ public class TestContext {
         }
     }
 
-    public static TestContext getInstance() {
+    public static synchronized TestContext getInstance() {
         if (instance == null) {
+            instance = new TestContext();
+        } else if (instance.getDriver() == null) {
+            // Si el driver fue cerrado, creamos una nueva instancia
             instance = new TestContext();
         }
         return instance;
     }
 
     public WebDriver getDriver() {
+        if (driver == null) {
+            initializeDriver();
+        }
         return driver;
     }
 
     public void closeDriver() {
-        try {
-            if (driver != null) {
-                System.out.println("\n=== Cerrando navegador ===");
+        if (driver != null) {
+            try {
                 driver.quit();
                 System.out.println("Navegador cerrado correctamente");
+            } catch (Exception e) {
+                System.err.println("Error al cerrar el navegador: " + e.getMessage());
+            } finally {
+                driver = null;
+                instance = null;
                 
                 // Forzar el cierre de cualquier proceso de Edge o msedgedriver que haya quedado
                 try {
@@ -93,13 +114,7 @@ public class TestContext {
                 } catch (Exception e) {
                     System.err.println("Error al finalizar procesos: " + e.getMessage());
                 }
-                
-                driver = null;
-                instance = null;
             }
-        } catch (Exception e) {
-            System.err.println("Error al cerrar el navegador: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

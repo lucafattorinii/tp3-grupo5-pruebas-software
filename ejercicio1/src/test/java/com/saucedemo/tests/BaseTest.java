@@ -1,24 +1,17 @@
 package com.saucedemo.tests;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.edge.EdgeDriverService;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class BaseTest {
     protected static WebDriver driver;
     protected final String BASE_URL = "https://www.saucedemo.com/";
-    private static final String SCREENSHOT_DIR = "target/screenshots/";
 
     @BeforeAll
     public static void setupClass() {
@@ -36,14 +29,7 @@ public class BaseTest {
             // Configurar la propiedad del sistema
             System.setProperty("webdriver.edge.driver", edgeDriverPath);
             
-            // Crear directorio para capturas de pantalla
-            File screenshotDir = new File(SCREENSHOT_DIR);
-            if (!screenshotDir.exists()) {
-                boolean created = screenshotDir.mkdirs();
-                if (!created) {
-                    System.err.println("No se pudo crear el directorio para capturas de pantalla");
-                }
-            }
+            // Configuración inicial del navegador
             
             System.out.println("Configuración completada correctamente");
             
@@ -123,6 +109,11 @@ public class BaseTest {
         }
     }
 
+    @AfterEach
+    public void afterEachTest(TestInfo testInfo) {
+        // Método vacío después de cada prueba
+        // Se puede usar para limpieza si es necesario
+    }
 
     @AfterAll
     public static void tearDownClass() {
