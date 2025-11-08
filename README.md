@@ -37,8 +37,32 @@ tp3/
 │   └── pom.xml
 │
 └── drivers/                 # Controladores de navegador
-    └── msedgedriver.exe
+    └── msedgedriver.exe     # Descargar de: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 ```
+
+##  Requisitos Previos
+
+###  Instalacion del Controlador de Microsoft Edge
+
+1. **Descargar el controlador**
+   - Visita: [Microsoft Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+   - Descarga la version que coincida con tu version de Microsoft Edge
+   - Extrae el archivo `msedgedriver.exe`
+
+2. **Ubicacion del controlador**
+   - Crea una carpeta llamada `drivers` en la raiz del proyecto
+   - Coloca el archivo `msedgedriver.exe` dentro de esta carpeta
+   - La estructura debe quedar asi:
+     ```
+     tp3-grupo5-pruebas-software/
+     └── drivers/
+         └── msedgedriver.exe
+     ```
+
+3. **Verificar version**
+   - Abre Microsoft Edge
+   - Ve a `edge://settings/help` para ver la version instalada
+   - Asegurate de que la version del controlador coincida exactamente o similar.
 
 ##  Ejercicio 1: Pruebas Funcionales con Selenium
 
