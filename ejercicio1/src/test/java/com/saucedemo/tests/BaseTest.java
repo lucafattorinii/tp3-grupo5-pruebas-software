@@ -16,14 +16,16 @@ public class BaseTest {
     @BeforeAll
     public static void setupClass() {
         try {
-            // Ruta al controlador de Microsoft Edge
-            String edgeDriverPath = "C:\\\\Users\\\\lucaf\\\\OneDrive\\\\Escritorio\\\\Luca\\\\Sistemas\\\\Prueba de Software\\\\tp3\\\\drivers\\\\msedgedriver.exe";
+            // Ruta relativa al controlador de Microsoft Edge
+            String projectPath = new File("").getAbsolutePath();
+            String edgeDriverPath = projectPath + "\\..\\drivers\\msedgedriver.exe";
             System.out.println("Configurando controlador en: " + edgeDriverPath);
             
             // Verificar que el archivo existe
             File driverFile = new File(edgeDriverPath);
             if (!driverFile.exists()) {
-                throw new RuntimeException("No se encontró el controlador en: " + edgeDriverPath);
+                throw new RuntimeException("No se encontró el controlador en: " + edgeDriverPath + "\n" +
+                                       "Asegurate de que el archivo msedgedriver.exe este en la carpeta 'drivers' en la raíz del proyecto.");
             }
             
             // Configurar la propiedad del sistema
@@ -67,8 +69,10 @@ public class BaseTest {
             System.setProperty("webdriver.edge.verboseLogging", "true");
             
             // Configuración del servicio con tiempo de espera extendido
+            String projectPath = new File("").getAbsolutePath();
+            String edgeDriverPath = projectPath + "\\..\\drivers\\msedgedriver.exe";
             EdgeDriverService service = new EdgeDriverService.Builder()
-                .usingDriverExecutable(new File("C:\\Users\\lucaf\\OneDrive\\Escritorio\\Luca\\Sistemas\\Prueba de Software\\tp3\\drivers\\msedgedriver.exe"))
+                .usingDriverExecutable(new File(edgeDriverPath))
                 .withLogOutput(System.out)
                 .withVerbose(true)
                 .build();

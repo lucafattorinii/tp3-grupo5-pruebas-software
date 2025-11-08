@@ -26,13 +26,15 @@ public class TestContext {
             System.out.println("\n=== Inicializando TestContext ===");
             
             // 1. Configuración del controlador
-            String edgeDriverPath = "C:\\\\Users\\\\lucaf\\\\OneDrive\\\\Escritorio\\\\Luca\\\\Sistemas\\\\Prueba de Software\\\\tp3\\\\drivers\\\\msedgedriver.exe";
+            String projectPath = new java.io.File("").getAbsolutePath();
+            String edgeDriverPath = projectPath + "\\..\\..\\drivers\\msedgedriver.exe";
             System.out.println("Ruta del controlador: " + edgeDriverPath);
             
             // Verificar que el archivo existe
             java.io.File driverFile = new java.io.File(edgeDriverPath);
             if (!driverFile.exists()) {
-                throw new RuntimeException("No se encontró el controlador en: " + edgeDriverPath);
+                throw new RuntimeException("No se encontró el controlador en: " + edgeDriverPath + 
+                                       "\nAsegurate de que el archivo msedgedriver.exe este en la carpeta 'drivers' en la raíz del proyecto.");
             }
             
             // Configurar la propiedad del sistema
